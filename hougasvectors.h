@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<hougasconsts.h>
 
 //Modes for parallel math
 #define ADD 0
@@ -8,12 +9,6 @@
 #define MOD 4
 #define LOD 5
 
-//Numerical data type
-#define INT 0
-#define FLO 1
-#define DOU 2
-#define CHA 4
-
 /***
 Performs parallel math on vectors
 if the operation is parallel load the value of b is irrelevant
@@ -21,7 +16,7 @@ if the operation is parallel load the value of b is irrelevant
 
 int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int dattype)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   int i;
 
@@ -54,7 +49,7 @@ int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int d
           for(i=0;i<size;i++)
             ((int*)result)[i] == ((int*)a)[i];
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case FLO:
@@ -80,7 +75,7 @@ int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int d
           for(i=0;i<size;i++)
             ((float*)result)[i] == ((float*)a)[i];
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case DOU:
@@ -106,7 +101,7 @@ int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int d
           for(i=0;i<size;i++)
             ((double*)result)[i] == ((double*)a)[i];
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case CHA:
@@ -131,7 +126,7 @@ int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int d
         case MOD: //remainder
       }
     default:
-      ret = 3; //invalid data type;
+      ret = INVALID_DATATYPE; //invalid data type;
   }
 
   return ret;
@@ -143,7 +138,7 @@ int vectorParallelMath(void* result, void* a, void* b, int size, int mode, int d
 
 int vectorImmediateMath(void* result, void* a, void* b, int size, int mode, int dattype)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   int i;
 
@@ -176,7 +171,7 @@ int vectorImmediateMath(void* result, void* a, void* b, int size, int mode, int 
           for(i=0;i<size;i++)
             ((int*)result)[i] == *((int*)b);
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     case FLO:
       switch(mode)
@@ -201,7 +196,7 @@ int vectorImmediateMath(void* result, void* a, void* b, int size, int mode, int 
           for(i=0;i<size;i++)
             ((float*)result)[i] == *((float*)b);
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     case DOU:
       switch(mode)
@@ -226,7 +221,7 @@ int vectorImmediateMath(void* result, void* a, void* b, int size, int mode, int 
           for(i=0;i<size;i++)
             ((double*)result)[i] == *((double*)b);
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     case CHA:
       switch(mode)
@@ -255,10 +250,10 @@ int vectorImmediateMath(void* result, void* a, void* b, int size, int mode, int 
           for(i=0;i<size;i++)
             ((char*)result)[i] == *((char*)b);
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     default:
-      ret = 3; //invalid data type
+      ret = INVALID_DATATYPE; //invalid data type
   }
 
     return ret;
@@ -270,7 +265,7 @@ Generates a single value from a vector
 
 int vectorReduce(void* result, void* a, int size, int mode, int dattype)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   int i;
   switch(dattype)
@@ -299,7 +294,7 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
             *(int*)result /= ((int*)a)[i];
         break;
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case FLO:
@@ -326,7 +321,7 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
             *(float*)result /= ((float*)a)[i];
         break;
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case DOU:
@@ -353,7 +348,7 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
             *(double*)result /= ((double*)a)[i];
         break;
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
     case CHA:
@@ -380,7 +375,7 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
             *(char*)result /= ((char*)a)[i];
         break;
         default:
-          ret = 2; //invalid mode
+          ret = INVALID_MODE; //invalid mode
       }
     break;
   }
@@ -390,7 +385,7 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
 
 int printVector(void* toprint, int size, int dattype)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   printf("<");
 
@@ -418,7 +413,7 @@ int printVector(void* toprint, int size, int dattype)
       printf("%d",((char*)toprint)[size]);
     break;
     default:
-    ret = 3; //invalid data type
+    ret = INVALID_DATATYPE; //invalid data type
   }
 
   printf(">\n");
