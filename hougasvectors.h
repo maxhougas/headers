@@ -383,6 +383,10 @@ int vectorReduce(void* result, void* a, int size, int mode, int dattype)
     return ret;
 }
 
+/***
+Print vector to terminal
+***/
+
 int printVector(void* toprint, int size, int dattype)
 {
   int ret = SUCCESS;

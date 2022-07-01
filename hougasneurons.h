@@ -1,8 +1,9 @@
 #include<stdlib.h>
+#include<hougasconsts.h>
 
 /***
 A McCullough-Pitts type neuron.
-Note that the transfer function is seperate, and called "resolveNeuron"
+Note that the transfer function is seperate, and called "neuronResolve"
 ***/
 
 typedef struct
@@ -19,7 +20,7 @@ You must already have data structures to connect ins weights and out to
 
 int neuronInit(neuron* neu, int* ins, int* weights, int* out)
 {
-  int ret = 0; //return value
+  int ret = SUCCESS; //return value
 
   neu->ins = ins;
   neu->weights = weights;
@@ -35,7 +36,7 @@ Enacts the transfer function:
 
 int neuronResolve(neuron* neu, int netWidth, int trigger)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   int result = 0;
 
@@ -59,13 +60,13 @@ Several assumptions are made:
 
 int initAllNeurons(neuron* neus, int* ins, int* weights, int netWidth, int netDepth)
 {
-  int ret = 0;
+  int ret = SUCCESS;
 
   int numOfNeus = netWidth*netDepth;
 
-    neus = (neuron*)malloc(numOfNeus*sizeof(neuron));
-    ins = (int*)malloc(numOfNeus*sizeof(int) + netWidth*sizeof(int));
-    weights = (int*)malloc(netWidth*numOfNeus*sizeof(int));
+  neus = (neuron*)malloc(numOfNeus*sizeof(neuron));
+  ins = (int*)malloc(numOfNeus*sizeof(int) + netWidth*sizeof(int));
+  weights = (int*)malloc(netWidth*numOfNeus*sizeof(int));
 
   neuron* currentNeuron;
   int* currentInput;
