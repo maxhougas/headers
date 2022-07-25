@@ -15,7 +15,7 @@ typedef struct
 
 /***
 Intializes a nueron by piping it up.
-You must already have data structures to connect ins weights and out to
+You must already have data structures to connect ins, weights, and out to
 ***/
 
 int neuronInit(neuron* neu, int* ins, int* weights, int* out)
@@ -68,21 +68,26 @@ int initAllNeurons(neuron* neus, int* ins, int* weights, int netWidth, int netDe
   ins = (int*)malloc(numOfNeus*sizeof(int) + netWidth*sizeof(int));
   weights = (int*)malloc(netWidth*numOfNeus*sizeof(int));
 
-  neuron* currentNeuron;
-  int* currentInput;
-  int* currentWeights;
-  int* currentOutput;
-
-  int i;
-  for(i=0;i<numOfNeus;i++)
+  if(neus && ins && weights)
   {
-    currentNeuron = &neus[i];
-    currentInput = &ins[(i/netWidth)*netWidth];
-    currentWeights = &weights[i*netWidth];
-    currentOutput = &ins[i + netWidth];
+    neuron* currentNeuron;
+    int* currentInput;
+    int* currentWeights;
+    int* currentOutput;
 
-    neuronInit(currentNeuron,currentInput,currentWeights,currentOutput);
+    int i;
+    for(i=0;i<numOfNeus;i++)
+    {
+      currentNeuron = &neus[i];
+      currentInput = &ins[(i/netWidth)*netWidth];
+      currentWeights = &weights[i*netWidth];
+      currentOutput = &ins[i + netWidth];
+
+      neuronInit(currentNeuron,currentInput,currentWeights,currentOutput);
+    }
   }
+  else
+    ret = MALLOC_FAIL;
 
   return ret;
 }
