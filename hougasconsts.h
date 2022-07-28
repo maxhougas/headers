@@ -5,6 +5,7 @@
 #define INVALID_MODE 3 //mode value not supported by function
 #define INVALID_DATATYPE 4 //data type value not supported by function
 #define EMPTY_SET 5 //attempted to operate on empty set
+#define MALLOC_FAIL //malloc failed to allocate memory
 
 //Numerical data type
 #define INT 0
