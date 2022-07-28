@@ -1,9 +1,10 @@
 //Return values for vector math
 #define SUCCESS 0 //function worked as intended
-#define INVALID_MODE 1 //mode value not supported by function
-#define INVALID_DATATYPE 2 //data type value not supported by function
-#define EMPTY_SET 4 //attempted to operate on empty set
-#define NULL_STRUCTURE 5 //passed an uninitalized pointer
+#define FAILURE 1 //unspecified failure
+#define NULL_STRUCTURE 2 //passed an unitialized pointer
+#define INVALID_MODE 3 //mode value not supported by function
+#define INVALID_DATATYPE 4 //data type value not supported by function
+#define EMPTY_SET 5 //attempted to operate on empty set
 
 //Numerical data type
 #define INT 0
