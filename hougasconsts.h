@@ -12,5 +12,3 @@
 #define FLO 1
 #define DOU 2
 #define CHA 4
-
-//This comment is a test line for git :)
