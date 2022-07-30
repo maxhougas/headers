@@ -8,9 +8,9 @@ Note that the transfer function is seperate, and called "neuronResolve"
 
 typedef struct
 {
-  int* ins;
-  int* weights;
-  int* out;
+ int* ins;
+ int* weights;
+ int* out;
 } neuron;
 
 /***
@@ -20,13 +20,18 @@ You must already have data structures to connect ins, weights, and out to
 
 int neuronInit(neuron* neu, int* ins, int* weights, int* out)
 {
-  int ret = SUCCESS; //return value
+ int ret = SUCCESS;
 
+ if(!neu)
+  ret = NULL_STRUCTURE;
+ else
+ {
   neu->ins = ins;
   neu->weights = weights;
   neu->out = out;
+ }
 
-  return ret;
+ return ret;
 }
 
 /***
@@ -36,17 +41,22 @@ Enacts the transfer function:
 
 int neuronResolve(neuron* neu, int netWidth, int trigger)
 {
-  int ret = SUCCESS;
+ int ret = SUCCESS;
 
+ if(!neu)
+  ret = NULL_STRUCTURE;
+ else
+ {
   int result = 0;
 
   int i;
   for(i=0;i<netWidth;i++)
-    result += neu->ins[i] * neu->weights[i];
+   result += neu->ins[i] * neu->weights[i];
 
   neu->out[0] = result > trigger;
+ }
 
-  return ret;
+ return ret;
 }
 
 /***
@@ -60,34 +70,34 @@ Several assumptions are made:
 
 int initAllNeurons(neuron* neus, int* ins, int* weights, int netWidth, int netDepth)
 {
-  int ret = SUCCESS;
+ int ret = SUCCESS;
 
-  int numOfNeus = netWidth*netDepth;
+ int numOfNeus = netWidth*netDepth;
 
-  neus = (neuron*)malloc(numOfNeus*sizeof(neuron));
-  ins = (int*)malloc(numOfNeus*sizeof(int) + netWidth*sizeof(int));
-  weights = (int*)malloc(netWidth*numOfNeus*sizeof(int));
+ neus = (neuron*)malloc(numOfNeus*sizeof(neuron));
+ ins = (int*)malloc(numOfNeus*sizeof(int) + netWidth*sizeof(int));
+ weights = (int*)malloc(netWidth*numOfNeus*sizeof(int));
 
-  if(neus && ins && weights)
+ if(!(neus && ins && weights))
+  ret = MALLOC_FAIL;
+ else
+ {
+  neuron* currentNeuron;
+  int* currentInput;
+  int* currentWeights;
+  int* currentOutput;
+
+  int i;
+  for(i=0;i<numOfNeus;i++)
   {
-    neuron* currentNeuron;
-    int* currentInput;
-    int* currentWeights;
-    int* currentOutput;
+   currentNeuron = &neus[i];
+   currentInput = &ins[(i/netWidth)*netWidth];
+   currentWeights = &weights[i*netWidth];
+   currentOutput = &ins[i + netWidth];
 
-    int i;
-    for(i=0;i<numOfNeus;i++)
-    {
-      currentNeuron = &neus[i];
-      currentInput = &ins[(i/netWidth)*netWidth];
-      currentWeights = &weights[i*netWidth];
-      currentOutput = &ins[i + netWidth];
-
-      neuronInit(currentNeuron,currentInput,currentWeights,currentOutput);
-    }
+   neuronInit(currentNeuron,currentInput,currentWeights,currentOutput);
   }
-  else
-    ret = MALLOC_FAIL;
+ }
 
-  return ret;
+ return ret;
 }
