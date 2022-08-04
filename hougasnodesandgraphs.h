@@ -1,5 +1,5 @@
-#include<stdlib.h>
-#include<hougasconsts.h>
+#include <stdlib.h>
+#include "./hougasconsts.h"
 
 /***
 A node that can have multiple parents and children with a generic data payload

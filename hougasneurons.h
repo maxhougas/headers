@@ -1,5 +1,5 @@
-#include<stdlib.h>
-#include<hougasconsts.h>
+#include <stdlib.h>
+#include "./hougasconsts.h"
 
 /***
 A McCullough-Pitts type neuron.
