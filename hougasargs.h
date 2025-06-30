@@ -8,7 +8,7 @@
 /***
  mjhprocflags generates a chart of commandline flags values and invocation counts
  *flagchart will be in the form of {"val","val","val",...&count,&count,&count...}
- validflags must be of the form {"single","single",..."multi","multi"...} blanks must be explicitely ""
+ validflags must be of the form {"single","single",..."multi","multi"...} blanks must be explicitly ""
 ***/
 
 int mjhprocflags(void** flagchart, char** validflags, int argc, char** argv)
