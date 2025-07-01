@@ -39,9 +39,9 @@ int mjhprocflags(void** flagchart, char** validflags, int argc, char** argv)
    for(j=1;j<nvalid;j+=2)
     if(!strncmp(&argv[i][2],validflags[j],1024))
     {
-     (*(*(int***)flagchart)[j+1])++;
+     (*(*(int***)flagchart)[j])++;
      if(i+1<argc && argv[i+1][0]!='-')
-      (*(char***)flagchart)[j]=argv[i+1];
+      (*(char***)flagchart)[j-1]=argv[i+1];
  }} }
 
  return 0;
@@ -54,9 +54,7 @@ int hougasargs(int argc, char** argv)
  char* validflags[] = {"a","along","b","blong","c","clong","--"};
  int nvalid=0; for(;strncmp(validflags[nvalid],"--",3);nvalid++);
 
- printf("%d %d\n",argc,nvalid);
  mjhprocflags(&chart,validflags,argc,argv);
-
 
  for(i=0;i<nvalid;i+=2) printf("%s %s %s %d\n",validflags[i],validflags[i+1],mjhfv(chart,i/2),mjhfc(chart,i/2));
 }
